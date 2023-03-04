@@ -1,24 +1,34 @@
-# README
+# Lunch and Learn - Mod 3 solo final project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a backend service that consumes external apis and exposes specific endpoints for a conceptual frontend application.
 
-Things you may want to cover:
+## APIs
 
-* Ruby version
+```
+GET /api/v1/recipes?country={{country}}
+```
+Returns a collection of recipes pertaining to supplied country name.
+If a country is not supplied, a random country will be chosen.
 
-* System dependencies
+```
+GET /api/v1/learning_resources?country={{country}}
+```
+Returns country educational resources.
 
-* Configuration
+```
+POST /api/v1/users
+```
+Endpoint for user creation. Must send user information as JSON payload in body of request.
 
-* Database creation
+```
+POST /api/v1/favorites
+```
+Saves a favorite recipe for a user.
 
-* Database initialization
+```
+GET /api/v1/favorites?api_key={{user_api_key}}
+```
+Returns the favorite recipes saved to that user.
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Setup
