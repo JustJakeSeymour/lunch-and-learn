@@ -30,5 +30,4 @@ GET /api/v1/favorites?api_key={{user_api_key}}
 ```
 Returns the favorite recipes saved to that user.
 
-
 ## Setup
