@@ -19,7 +19,7 @@ Returns country educational resources.
 POST /api/v1/users
 ```
 Endpoint for user creation. Must send user information as JSON payload in body of request.
-
+*Note: for this project, users are simply a generated key that is matched in future requests.
 ```
 POST /api/v1/favorites
 ```
@@ -29,6 +29,5 @@ Saves a favorite recipe for a user.
 GET /api/v1/favorites?api_key={{user_api_key}}
 ```
 Returns the favorite recipes saved to that user.
-
 
 ## Setup
