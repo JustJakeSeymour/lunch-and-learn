@@ -16,6 +16,8 @@ RSpec.describe RecipesService, type: :service do
       expect(service_recipes[:label]).to be_a(String)
       expect(service_recipes).to have_key(:url)
       expect(service_recipes[:url]).to be_a(String)
+      expect(service_recipes).to have_key(:image)
+      expect(service_recipes[:image]).to be_a(String)
     end
   end
 end

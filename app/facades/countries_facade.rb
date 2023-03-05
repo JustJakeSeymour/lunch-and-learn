@@ -1,6 +1,7 @@
 class CountriesFacade
   def self.random_country
     json = CountriesService.all_countries
+    
     countries_array(json).sample(1).first
   end
 

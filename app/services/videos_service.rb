@@ -3,6 +3,11 @@ class VideosService
     response = conn.get("search?q=#{search}")
     parse_json(response)
   end
+  
+  def self.info(id)
+    response = conn.get("videos?part=snippet&id=#{id}&fields=items(id%2Csnippet)")
+    parse_json(response)
+  end
 
   def self.conn
     Faraday.new(url: 'https://www.googleapis.com/youtube/v3/') do |f|
