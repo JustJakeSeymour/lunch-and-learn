@@ -4,7 +4,7 @@ RSpec.describe 'users API endpoint' do
   describe 'happy path testing' do
     context 'create user' do
       it 'creates user from supplied json', :vcr do
-        get api_v1_users_path, headers: { 'HTTP_FERN_KEY' => ENV['FERN_KEY'] }
+        post api_v1_users_path, body: { 'name' => 'name' }
 
         expect(response).to be_successful
 
