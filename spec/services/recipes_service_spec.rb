@@ -10,6 +10,8 @@ RSpec.describe RecipesService, type: :service do
       expect(service).to have_key(:hits)
       expect(service[:hits]).to be_an(Array)
       expect(service[:hits].first).to be_a(Hash)
+      expect(service[:hits].first).to have_key(:recipe)
+      
       expect(service_recipes).to have_key(:label)
       expect(service_recipes[:label]).to be_a(String)
       expect(service_recipes).to have_key(:url)
