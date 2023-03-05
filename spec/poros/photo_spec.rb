@@ -4,12 +4,16 @@ RSpec.describe Photo, type: :poro do
   context 'initialize' do
     it 'has attributes' do
       data = {
-        photo: 'Random Photo'
+        alt_description: 'Photo Description',
+        urls: {
+          raw: 'Photo Url'
+        }
       }
       photo = Photo.new(data)
 
       expect(photo).to be_a(Photo)
-      expect(photo.photo).to eq('Random Photo')
+      expect(photo.alt_tag).to eq('Photo Description')
+      expect(photo.url).to eq('Photo Url')
     end
   end
 end
