@@ -4,9 +4,17 @@ RSpec.describe 'users API endpoint' do
   describe 'happy path testing' do
     context 'create user' do
       it 'creates user from supplied json', :vcr do
-        post api_v1_users_path, body: { 'name' => 'name',
-                                        'email' => 'user email'
-                                      }
+        user_create_params = { 
+          name: 'name',
+          email: 'user email'
+        }
+        headers = { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+        post api_v1_users_path, headers: headers, params: JSON.generate(user_create_params)
+        created_user = User.last
+
+        expect(created_user.name).to eq('name')
+        expect(created_user.email).to eq('user email')
+        expect(created_user.api_key).to be_a(String)
 
         expect(response).to be_successful
 
