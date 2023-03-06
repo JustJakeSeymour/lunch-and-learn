@@ -1,6 +1,6 @@
 class PlacesService
   def self.tourism_radius(latlong, radius)
-    response = conn.get("places?categories=tourism&filter=circle:#{latlong[1]},#{latlong[0]},#{radius}")
+    response = conn.get("places?categories=tourism.sights&filter=circle:#{latlong[1]},#{latlong[0]},#{radius}")
     parse_json(response)
   end
 
