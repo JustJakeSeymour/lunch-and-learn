@@ -6,7 +6,7 @@ RSpec.describe TouristSightsFacade, type: :facade do
       it 'country_latlong' do
         country = 'peru'
         expect(TouristSightsFacade.capital_sites(country)).to be_an(Array)
-        expect(TouristSightsFacade.capital_sites(country).first).to be_a(TouristSite)
+        expect(TouristSightsFacade.capital_sites(country).first).to be_a(TouristSight)
       end
     end
   end
