@@ -1,4 +1,8 @@
 class Api::V1::FavoritesController < ApplicationController
+  def index
+    render json: FavoriteSerializer.format(Favorite.where(api_key: params['api_key']))
+  end
+
   def create
     Favorite.create(
       api_key: params['api_key'], 
