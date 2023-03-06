@@ -8,4 +8,14 @@ RSpec.describe CountriesFacade, type: :facade do
       end
     end
   end
+
+  describe 'FINAL ASSESSMENT' do
+    context 'lat long for capital' do
+      it 'latlong' do
+        country = 'peru'
+        expect(CountriesFacade.latlong(country)).to be_an(Array)
+        expect(CountriesFacade.latlong(country)).to eq([-12.05,-77.05])
+      end
+    end
+  end
 end
