@@ -1,6 +1,6 @@
 class VideosService
   def self.search_videos(search)
-    response = conn.get("search?q=#{search}")
+    response = conn.get("search?q=mrhistory#{search}")
     parse_json(response)
   end
   
