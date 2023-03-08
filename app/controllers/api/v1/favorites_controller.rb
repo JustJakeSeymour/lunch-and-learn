@@ -19,7 +19,7 @@ class Api::V1::FavoritesController < ApplicationController
         )
       render json: success_message
     else
-      render json: ErrorSerializer.format(Error.new("No user found with the api key: #{params['api_key']}", 'NOT FOUND', 404)), status: :unprocessable_entity
+      render json: error_message, status: :unprocessable_entity
     end
   end
 
@@ -28,5 +28,9 @@ private
     {
       success: "Favorite added successfully"
     }
+  end
+
+  def error_message
+    ErrorSerializer.format(Error.new("No user found with the api key: #{params['api_key']}", 'NOT FOUND', 404))
   end
 end

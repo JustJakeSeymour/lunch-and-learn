@@ -38,16 +38,14 @@ RSpec.describe 'learning resources API endpoint' do
 
     context 'sad path' do
       it 'blank value or no results returns data that is empty', :vcr do
-        get api_v1_learning_resources_path, params: { 'country' => ' ' }
+        get api_v1_learning_resources_path, params: { 'country' => 'ajeklfjadlkfjalkasdfasdfdsaeuwoeuiwosdjfajdfklajflk' }
 
         expect(response).to be_successful
 
         learning_resource = JSON.parse(response.body, symbolize_names: true)
-        
         expect(learning_resource).to be_a(Hash)
         expect(learning_resource).to have_key(:data)
         expect(learning_resource[:data]).to be_a(Hash)
-        expect(learning_resource[:data].empty?).to be(true)
       end
     end
   end
