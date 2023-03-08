@@ -1,16 +1,26 @@
 class Api::V1::FavoritesController < ApplicationController
   def index
-    render json: FavoriteSerializer.format(Favorite.where(api_key: params['api_key']))
+    user = User.find_by_api_key(params['api_key'])
+    if user
+      render json: FavoriteSerializer.format(Favorite.where(api_key: user.api_key))
+    else
+      render json: ErrorSerializer.format(Error.new("No user found with the api key: #{params['api_key']}", 'NOT FOUND', 404)), status: :unprocessable_entity
+    end
   end
-
+  
   def create
-    Favorite.create(
-      api_key: params['api_key'], 
-      country: params['country'], 
-      recipe_link: params['recipe_link'], 
-      recipe_title: params['recipe_title']
-    )
-    render json: success_message
+    user = User.find_by_api_key(params['api_key'])
+    if user
+      favorite = Favorite.create(
+          api_key: user.api_key, 
+          country: params['country'], 
+          recipe_link: params['recipe_link'], 
+          recipe_title: params['recipe_title']
+        )
+      render json: success_message
+    else
+      render json: error_message, status: :unprocessable_entity
+    end
   end
 
 private
@@ -18,5 +28,9 @@ private
     {
       success: "Favorite added successfully"
     }
+  end
+
+  def error_message
+    ErrorSerializer.format(Error.new("No user found with the api key: #{params['api_key']}", 'NOT FOUND', 404))
   end
 end

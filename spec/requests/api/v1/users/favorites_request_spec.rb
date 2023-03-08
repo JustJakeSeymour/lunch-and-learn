@@ -38,9 +38,6 @@ RSpec.describe 'favorites API endpoint' do
         favorite_2 = Favorite.create(api_key: user.api_key, country: 'thailand', recipe_link: 'recipe link', recipe_title: 'recipe title')
         favorite_3 = Favorite.create(api_key: user_2.api_key, country: 'thailand', recipe_link: 'recipe link', recipe_title: 'recipe title')
 
-        # favorite_index_params = { 
-        #   api_key: user.api_key,
-        # }
         headers = { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
         get api_v1_favorites_path, headers: headers, params: { api_key: user.api_key }
         
@@ -67,6 +64,51 @@ RSpec.describe 'favorites API endpoint' do
         expect(favorites[:data].first[:attributes][:country]).to be_a(String)
         expect(favorites[:data].first[:attributes]).to have_key(:created_at)
         expect(favorites[:data].first[:attributes][:created_at]).to be_a(String)
+      end
+    end
+  end
+
+  describe 'sad path testing' do
+    context '400 error for bad api key' do
+      it 'returns error for unknown api key' do
+        get api_v1_favorites_path, headers: headers, params: { api_key: '0000000' }
+
+        expect(response).to_not be_successful
+
+        parsed_response = JSON.parse(response.body, symbolize_names: true)
+
+        expect(parsed_response).to have_key(:code)
+        expect(parsed_response[:code]).to be_a(String)
+
+        expect(parsed_response).to have_key(:message)
+        expect(parsed_response[:message]).to be_a(String)
+
+        expect(parsed_response).to have_key(:status)
+        expect(parsed_response[:status]).to be_a(String)
+      end
+      
+      it 'creates favorite from supplied json', :vcr do
+        favorite_create_params = { 
+          api_key: '0000000',
+          country: 'thailand',
+          recipe_link: 'recipe link',
+          recipe_title: 'recipe title'
+        }
+        headers = { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+        post api_v1_favorites_path, headers: headers, params: JSON.generate(favorite_create_params)
+
+        expect(response).to_not be_successful
+
+        parsed_response = JSON.parse(response.body, symbolize_names: true)
+
+        expect(parsed_response).to have_key(:code)
+        expect(parsed_response[:code]).to be_a(String)
+
+        expect(parsed_response).to have_key(:message)
+        expect(parsed_response[:message]).to be_a(String)
+
+        expect(parsed_response).to have_key(:status)
+        expect(parsed_response[:status]).to be_a(String)
       end
     end
   end
